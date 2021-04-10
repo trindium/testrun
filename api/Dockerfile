@@ -1,10 +1,10 @@
-FROM python:2.7.17-slim-buster
+FROM python:slim-buster
 
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+RUN pip3 install flask
+RUN pip3 install kafka-python
 
 COPY . .
 
-CMD [ "python", "-m" , "flask", "run", "--host=0.0.0.0"]
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]

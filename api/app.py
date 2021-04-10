@@ -4,9 +4,12 @@ from kafka.errors import KafkaError
 import json
 from datetime import datetime
 
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
+
 
 
 @app.route('/', methods=['POST'])
@@ -22,4 +25,4 @@ def home():
 
 
 
-app.run()
+app.run(host="localhost", port=8000)
