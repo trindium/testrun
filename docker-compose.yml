@@ -1,5 +1,5 @@
 ---
-version: '2'
+version: '3.7'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:6.1.1
@@ -214,6 +214,7 @@ services:
       - broker
     networks:
       - testrun
+    restart: always
     environment:
       PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-74fa24c1c3fe'
       APP_NAME: 'juan'
@@ -226,32 +227,13 @@ services:
         gelf-address: "udp://syslogserver.coralogix.com:20001"
         # Required parameters for request
         env: "PRIVATE_KEY,APP_NAME,SUB_NAME,COMPANY_ID"
-  node-red:
-    image: nodered/node-red:latest
-    ports:
-      - "1880:1880"
-    networks:
-      - testrun
-    volumes:
-      - node-red-data:/data
-    environment:
-      PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-74fa24c1c3fe'
-      APP_NAME: 'juan'
-      SUB_NAME: 'nodered'
-      COMPANY_ID: '15176'
-    # logging:
-    #   driver: gelf
-    #   options:
-    #     # Address of Coralogix syslog server
-    #     gelf-address: "udp://syslogserver.coralogix.com:20001"
-    #     # Required parameters for request
-    #     env: "PRIVATE_KEY,APP_NAME,SUB_NAME,COMPANY_ID"
   consumer:
     build: consumer/
     depends_on: 
       - broker
     networks:
       - testrun
+    restart: always
     environment:
       PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-74fa24c1c3fe'
       APP_NAME: 'juan'
