@@ -42,10 +42,10 @@ services:
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
-      PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-74fa24c1c3fe'
+      PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-xxxxxxx'
       APP_NAME: 'juan'
       SUB_NAME: 'broker'
-      COMPANY_ID: '15176'
+      COMPANY_ID: 'xxxxxxx'
     # logging:
     #   driver: gelf
     #   options:
@@ -216,10 +216,10 @@ services:
       - testrun
     restart: always
     environment:
-      PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-74fa24c1c3fe'
+      PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-xxxxxxxx'
       APP_NAME: 'juan'
       SUB_NAME: 'api'
-      COMPANY_ID: '15176'
+      COMPANY_ID: 'xxxxxx'
     logging:
       driver: gelf
       options:
@@ -235,10 +235,10 @@ services:
       - testrun
     restart: always
     environment:
-      PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-74fa24c1c3fe'
+      PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-xxxxxxx'
       APP_NAME: 'juan'
       SUB_NAME: 'consumer'
-      COMPANY_ID: '15176'
+      COMPANY_ID: 'xxxxxx'
     logging:
       driver: gelf
       options:
