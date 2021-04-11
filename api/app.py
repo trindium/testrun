@@ -4,8 +4,8 @@ from kafka.errors import KafkaError
 import json
 from datetime import datetime
 
-import logging
-logging.basicConfig(level=logging.DEBUG)
+#import logging
+#logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -16,11 +16,8 @@ app.config["DEBUG"] = True
 def home():
     data = request.json
     data.update({'timestamp' : str(datetime.now())})
-
-    producer = KafkaProducer(bootstrap_servers=['broker:29092'])
-    producer = KafkaProducer(value_serializer=lambda m: json.dumps(m).encode('ascii'))
-    producer.send('jsontopic', data)
-    
+    producer = KafkaProducer(bootstrap_servers=['broker:29092'], value_serializer=lambda m: json.dumps(m).encode('ascii'))
+    producer.send('json-topic', data)
     return jsonify(data)
 
 

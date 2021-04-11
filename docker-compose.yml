@@ -27,6 +27,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092
+      KAFKA_ADVERTISED_HOST_NAME: 'broker'
       KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
@@ -35,12 +36,23 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_JMX_PORT: 9101
-      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_JMX_HOSTNAME: broker
       KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+      PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-74fa24c1c3fe'
+      APP_NAME: 'juan'
+      SUB_NAME: 'broker'
+      COMPANY_ID: '15176'
+    # logging:
+    #   driver: gelf
+    #   options:
+    #     # Address of Coralogix syslog server
+    #     gelf-address: "udp://syslogserver.coralogix.com:20001"
+    #     # Required parameters for request
+    #     env: "PRIVATE_KEY,APP_NAME,SUB_NAME,COMPANY_ID"
     networks:
       - testrun
 
@@ -202,6 +214,58 @@ services:
       - broker
     networks:
       - testrun
+    environment:
+      PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-74fa24c1c3fe'
+      APP_NAME: 'juan'
+      SUB_NAME: 'api'
+      COMPANY_ID: '15176'
+    logging:
+      driver: gelf
+      options:
+        # Address of Coralogix syslog server
+        gelf-address: "udp://syslogserver.coralogix.com:20001"
+        # Required parameters for request
+        env: "PRIVATE_KEY,APP_NAME,SUB_NAME,COMPANY_ID"
+  node-red:
+    image: nodered/node-red:latest
+    ports:
+      - "1880:1880"
+    networks:
+      - testrun
+    volumes:
+      - node-red-data:/data
+    environment:
+      PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-74fa24c1c3fe'
+      APP_NAME: 'juan'
+      SUB_NAME: 'nodered'
+      COMPANY_ID: '15176'
+    # logging:
+    #   driver: gelf
+    #   options:
+    #     # Address of Coralogix syslog server
+    #     gelf-address: "udp://syslogserver.coralogix.com:20001"
+    #     # Required parameters for request
+    #     env: "PRIVATE_KEY,APP_NAME,SUB_NAME,COMPANY_ID"
+  consumer:
+    build: consumer/
+    depends_on: 
+      - broker
+    networks:
+      - testrun
+    environment:
+      PRIVATE_KEY: 'be1fe366-ed73-a842-bb3e-74fa24c1c3fe'
+      APP_NAME: 'juan'
+      SUB_NAME: 'consumer'
+      COMPANY_ID: '15176'
+    logging:
+      driver: gelf
+      options:
+        # Address of Coralogix syslog server
+        gelf-address: "udp://syslogserver.coralogix.com:20001"
+        # Required parameters for request
+        env: "PRIVATE_KEY,APP_NAME,SUB_NAME,COMPANY_ID" 
+volumes:
+  node-red-data:
 networks:
   testrun:
       
